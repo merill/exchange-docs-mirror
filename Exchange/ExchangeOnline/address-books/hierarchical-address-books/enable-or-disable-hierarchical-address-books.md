@@ -1,0 +1,279 @@
+---
+layout: Conceptual
+title: Enable or disable hierarchical address books in Exchange Online | Microsoft Learn
+canonicalUrl: https://learn.microsoft.com/en-us/exchange/address-books/hierarchical-address-books/enable-or-disable-hierarchical-address-books
+Manager: serdars
+ms.subservice: exo-address-books
+ms.devlang: powershell
+ROBOTS: INDEX,FOLLOW
+breadcrumb_path: /exchange/breadcrumb/toc.json
+recommendations: true
+uhfHeaderId: MSDocsHeader-Exchange
+feedback_system: None
+feedback_product_url: ''
+ms.localizationpriority: medium
+ms.custom:
+- has-azure-ad-ps-ref
+description: Admins can learn how to enable and configure or disable a hierarchical address book in their Exchange Online organization.
+ms.topic: how-to
+author: AshaIyengar21
+ms.author: serdars
+ms.assetid: b4c3a175-ce5e-4bfb-a4a0-92d25f3644b3
+ms.reviewer: 
+ms.collection:
+- exchange-online
+- M365-email-calendar
+audience: ITPro
+ms.service: exchange-online
+f1.keywords:
+- NOCSH
+ms.date: 2018-06-25T00:00:00.0000000Z
+locale: en-us
+document_id: fe9eef8a-3acf-ed01-ddec-c1bc1f0a7f73
+document_version_independent_id: f6c9ef82-8b91-2b3c-ec21-8675a3f25386
+original_content_git_url: https://github.com/MicrosoftDocs/OfficeDocs-Exchange-pr/blob/live/Exchange/ExchangeOnline/address-books/hierarchical-address-books/enable-or-disable-hierarchical-address-books.md
+site_name: Docs
+depot_name: office.OfficeDocs-Exchange
+page_type: conceptual
+toc_rel: ../../onlinetoc/toc.json
+pdf_url_template: https://learn.microsoft.com/pdfstore/en-us/office.OfficeDocs-Exchange/{branchName}{pdfName}
+feedback_help_link_type: ''
+feedback_help_link_url: ''
+asset_id: address-books/hierarchical-address-books/enable-or-disable-hierarchical-address-books
+moniker_range_name: 
+monikers: []
+item_type: Content
+source_path: Exchange/ExchangeOnline/address-books/hierarchical-address-books/enable-or-disable-hierarchical-address-books.md
+cmProducts:
+- https://authoring-docs-microsoft.poolparty.biz/devrel/cf9b82c5-b6dc-45f3-b005-b1bc5fc03bea
+spProducts:
+- https://authoring-docs-microsoft.poolparty.biz/devrel/0c85d34e-bfd2-4466-957c-f0b61e9692df
+platformId: 6d770e06-deba-9df3-966d-eac9514f9533
+---
+
+# Enable or disable hierarchical address books in Exchange Online | Microsoft Learn
+
+The hierarchical address book (HAB) allows users to look for recipients in their address book using an organizational hierarchy. For more information, see [Hierarchical address books](hierarchical-address-books).
+
+The cmdlets and parameters that you use to configure a HAB are described in the following table:
+
+| Cmdlet | Parameter | Description |
+| --- | --- | --- |
+| [Set-OrganizationConfig](/en-us/powershell/module/exchangepowershell/set-organizationconfig) | *HierarchicalAddressBookRoot* | Enables or disables the HAB in the organization. <br> A valid value is a distribution group or mail-enabled security group. You can't use a dynamic distribution group or an Office 35 group. |
+| [Set-Group](/en-us/powershell/module/exchangepowershell/set-group) | *IsHierarchicalGroup* | Specifies whether the distribution group or mail-enabled security group is used in the hierarchy of the HAB. Valid values are `$true` or `$false` (the default value is `$false`). |
+| [Set-Contact](/en-us/powershell/module/exchangepowershell/set-contact)[Set-Group](/en-us/powershell/module/exchangepowershell/set-group)[Set-User](/en-us/powershell/module/exchangepowershell/set-user) | *SeniorityIndex* *PhoneticDisplayName* | *SeniorityIndex*: A numerical value that sorts users, contacts, or groups in descending order in the HAB (higher values are shown before lower values). <br>*PhoneticDisplayName*: When multiple users, contacts or groups have the same *SeniorityIndex* value or the value isn't set, the users, contacts, or groups are listed in ascending alphabetical order. If *PhoneticDisplayName* isn't configured, the users, contacts, or groups are listed in ascending alphabetical order based on the *DisplayName* parameter value (which is also the default sort order without the HAB). |
+
+## What do you need to know before you begin?
+
+- Estimated time to complete: 30 minutes.
+- You need to be assigned permissions before you can perform this procedure or procedures. To see what permissions you need, see the "Distribution groups" entry in the [Feature permissions in Exchange Online](../../permissions-exo/feature-permissions) topic.
+- To connect to Exchange Online PowerShell, see [Connect to Exchange Online PowerShell](/en-us/powershell/exchange/connect-to-exchange-online-powershell).
+- This topic uses Exchange Online PowerShell examples to create distribution groups, but you can also use the Exchange admin center (EAC) to create and add members to distribution groups. For details, see [Create and manage distribution groups](../../recipients-in-exchange-online/manage-distribution-groups/manage-distribution-groups).
+- After you create the HAB, you can use the EAC to manage the membership of the groups in the organizational hierarchy. However, you can only use Exchange Online PowerShell to configure the *SeniorityIndex* parameter for any new groups or users that you create.
+
+Tip
+
+Having problems? Ask for help in the Exchange Online forum at [Exchange Online](/en-us/answers/tags/11/office-exchange-online).
+
+## Enable and configure a hierarchical address book
+
+### Step 1: Create the distribution groups for the HAB structure
+
+This example uses the following hierarchy:
+
+- The distribution group named "Contoso,Ltd" is the top-level organization in the hierarchy (the root organization).
+- Distribution groups named Corporate Office, Product Support Organization, and Sales & Marketing Organization are child organizations under Contoso,Ltd (members of the Contoso,Ltd group).
+- The distribution groups named Human Resources, Accounting Group, and Administration Group are child organizations under Corporate Office (members of the Corporate Office group).
+
+```PowerShell
+New-DistributionGroup -Name "Contoso,Ltd" -Alias "ContosoRoot"
+```
+
+```PowerShell
+New-DistributionGroup -Name "Corporate Office"
+```
+
+```PowerShell
+New-DistributionGroup -Name "Product Support Organization" -Alias ProductSupport
+```
+
+```PowerShell
+New-DistributionGroup -Name "Sales & Marketing Organization" -Alias "Sales&Marketing"
+```
+
+```PowerShell
+New-DistributionGroup -Name "Human Resources"
+```
+
+```PowerShell
+New-DistributionGroup -Name "Accounting Group" -Alias Accounting
+```
+
+```PowerShell
+New-DistributionGroup -Name "Administration Group" -Alias Administration
+```
+
+**Note**: If you don't use the *Alias* parameter when you create a distribution group, the value of the *Name* parameter is used with spaces removed.
+
+For detailed syntax and parameter information, see [New-DistributionGroup](/en-us/powershell/module/exchangepowershell/new-distributiongroup).
+
+### Step 2: Use Exchange Online PowerShell to specify the root organization for the HAB
+
+This example specifies the distribution group named "Contoso,Ltd" from the previous step as the root organization for the HAB.
+
+```PowerShell
+Set-OrganizationConfig -HierarchicalAddressBookRoot "Contoso,Ltd"
+```
+
+### Step 3: Use Exchange Online PowerShell to designate distribution groups as hierarchical groups
+
+The following examples designate the groups that we previously created as hierarchical groups:
+
+```PowerShell
+Set-Group -Identity "Contoso,Ltd" -IsHierarchicalGroup $true
+```
+
+```PowerShell
+Set-Group -Identity "Corporate Office" -IsHierarchicalGroup $true
+```
+
+```PowerShell
+Set-Group -Identity "Product Support Organization" -IsHierarchicalGroup $true
+```
+
+```PowerShell
+Set-Group -Identity "Sales & Marketing Organization" -IsHierarchicalGroup $true
+```
+
+```PowerShell
+Set-Group -Identity "Human Resources" -IsHierarchicalGroup $true
+```
+
+```PowerShell
+Set-Group -Identity "Accounting Group" -IsHierarchicalGroup $true
+```
+
+```PowerShell
+Set-Group -Identity "Administration Group" -IsHierarchicalGroup $true
+```
+
+For detailed syntax and parameter information, see [Set-Group](/en-us/powershell/module/exchangepowershell/set-group).
+
+### Step 4: Add the child groups as members of the appropriate groups in the hierarchy
+
+This example adds the groups named Corporate Office, Product Support Organization, and Sales & Marketing Organization as members of Contoso,Ltd (the root organization).
+
+```PowerShell
+Update-DistributionGroupMember -Identity "Contoso,Ltd" -Members "Corporate Office","Product Support Organization","Sales & Marketing Organization"
+```
+
+This example adds the groups named Human Resources, Accounting Group, and Administration Group as members of Corporate Office.
+
+```PowerShell
+Update-DistributionGroupMember -Identity "Corporate Office" -Members "Human Resources","Accounting Group","Administration Group"
+```
+
+For detailed syntax and parameter information, see [Update-DistributionGroupMember](/en-us/powershell/module/exchangepowershell/update-distributiongroupmember).
+
+### Step 5: Add users to the appropriate groups in the HAB
+
+This example adds the users Amy Alberts, David Hamilton, and Rajesh M. Patel to the group named Corporate Office without affecting other existing members.
+
+```PowerShell
+$members=@('aalberts@contoso.com','dhamilton@contoso.com','rmpatel@contoso.com')
+foreach($member in $members){
+   Add-DistributionGroupMember -Identity "Corporate Office" -Member $member
+}
+```
+
+For detailed syntax and parameter information, see [Update-DistributionGroupMember](/en-us/powershell/module/exchangepowershell/update-distributiongroupmember).
+
+### Step 6: Use Exchange Online PowerShell to configure the sort order for groups in the HAB
+
+The *SeniorityIndex* parameter value for a group affects how the groups are sorted in the HAB (higher values are displayed first).
+
+The following examples configure the child groups of the Corporate Office group to display in the following order:
+
+- Human Resources
+- Accounting Group
+- Administration Group
+
+```PowerShell
+Set-Group -Identity "Human Resources" -SeniorityIndex 100
+```
+
+```PowerShell
+Set-Group -Identity "Accounting Group" -SeniorityIndex 50
+```
+
+```PowerShell
+Set-Group -Identity "Administration Group" -SeniorityIndex 25
+```
+
+For detailed syntax and parameter information, see [Set-Group](/en-us/powershell/module/exchangepowershell/set-group).
+
+### Step 7: Use Exchange Online PowerShell to configure the sort order for users in the HAB
+
+The *SeniorityIndex* parameter value for a user affects how the users are sorted in groups in the HAB (higher values are displayed first).
+
+The following examples configure the members of the Corporate Office group to display in the following order:
+
+- David Hamilton
+- Rajesh M. Patel
+- Amy Alberts
+
+```PowerShell
+Set-User -Identity DHamilton -SeniorityIndex 100
+```
+
+```PowerShell
+Set-User -Identity RMPatel -SeniorityIndex 50
+```
+
+```PowerShell
+Set-User -Identity AAlberts -SeniorityIndex 25
+```
+
+For detailed syntax and parameter information, see [Set-User](/en-us/powershell/module/exchangepowershell/set-user).
+
+### How do you know this worked?
+
+To verify that you've successfully enabled and configured a hierarchical address book, use any of the following steps:
+
+- Open Outlook in a profile that's connected to a mailbox in your Exchange Online organization, and click **Address Book** or press Ctrl+Shift+B. The HAB is displayed on the **Organization** tab, similar to the following figure.
+
+    ![Hierarchical Address Book dialog.](../../exchangeonline/media/itpro_mailbox_habdisplay.gif)
+- In Exchange Online PowerShell, run the following commands to verify the property values:
+
+    ```PowerShell
+    Get-OrganizationConfig | Format-List HierarchicalAddressBookRoot
+    ```
+
+    ```PowerShell
+    Get-Group -ResultSize unlimited | where {$_.IsHierarchicalGroup -match 'True'} | Format-Table SeniorityIndex,PhoneticDisplayName,DisplayName -Auto
+    ```
+
+    ```PowerShell
+    Get-Group -ResultSize unlimited | Format-Table SeniorityIndex,PhoneticDisplayName,DisplayName -Auto
+    ```
+
+## Use Exchange Online PowerShell to disable a hierarchical address book
+
+To disable a HAB, you don't need to delete the groups that are associated with the HAB structure or reset the *SeniorityIndex* values for groups or users. Disabling the HAB only prevents the HAB from being displayed in Outlook. To re-enable the HAB with the same configuration settings, you only need to specify the root organization for the HAB.
+
+This example disables the hierarchical address book.
+
+```PowerShell
+Set-OrganizationConfig -HierarchicalAddressBookRoot $null
+```
+
+### How do you know this worked?
+
+To verify that you've successfully disabled hierarchical address book, use any of the following steps:
+
+- Open Outlook in a profile that's connected to a mailbox in your Exchange Online organization, and click **Address Book** or press Ctrl+Shift+B. Verify that the entries in the address book are displayed in alphabetical order.
+- In Exchange Online PowerShell, run the following command to verify that the **HierarchicalAddressBookRoot** property value is blank:
+
+    ```PowerShell
+    Get-OrganizationConfig | Format-List HierarchicalAddressBookRoot
+    ```

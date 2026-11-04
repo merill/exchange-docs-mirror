@@ -1,0 +1,120 @@
+---
+layout: Conceptual
+title: Use a screen reader to add a new equipment mailbox in the Classic Exchange admin center in Exchange Online | Microsoft Learn
+canonicalUrl: https://learn.microsoft.com/en-us/exchange/accessibility/use-screen-reader-to-add-equipment-mailbox-in-exchange-admin-center
+Manager: serdars
+ms.subservice: exo-manageability
+ms.devlang: powershell
+ROBOTS: INDEX,FOLLOW
+breadcrumb_path: /exchange/breadcrumb/toc.json
+recommendations: true
+uhfHeaderId: MSDocsHeader-Exchange
+feedback_system: None
+feedback_product_url: ''
+ms.localizationpriority: medium
+ms.topic: how-to
+author: AshaIyengar21
+ms.author: serdars
+ms.assetid: 848fdbc6-34f7-4c46-807b-7ac85a28f725
+ms.reviewer: 
+description: Admins can learn how to use a screen reader to create an equipment mailbox in the Classic Exchange admin center (Classic EAC) in Exchange Online.
+ms.collection:
+- exchange-online
+- M365-email-calendar
+audience: ITPro
+f1.keywords:
+- CSH
+ms.custom: A11y_UseSR
+ms.service: exchange-online
+ms.date: 2018-06-26T00:00:00.0000000Z
+locale: en-us
+document_id: 038509a1-730f-29e6-afb0-5edd5ebb5995
+document_version_independent_id: 08e8adde-0851-0fda-bc40-24b46b23a4ac
+original_content_git_url: https://github.com/MicrosoftDocs/OfficeDocs-Exchange-pr/blob/live/Exchange/ExchangeOnline/accessibility/use-screen-reader-to-add-equipment-mailbox-in-exchange-admin-center.md
+site_name: Docs
+depot_name: office.OfficeDocs-Exchange
+page_type: conceptual
+toc_rel: ../onlinetoc/toc.json
+pdf_url_template: https://learn.microsoft.com/pdfstore/en-us/office.OfficeDocs-Exchange/{branchName}{pdfName}
+feedback_help_link_type: ''
+feedback_help_link_url: ''
+asset_id: accessibility/use-screen-reader-to-add-equipment-mailbox-in-exchange-admin-center
+moniker_range_name: 
+monikers: []
+item_type: Content
+source_path: Exchange/ExchangeOnline/accessibility/use-screen-reader-to-add-equipment-mailbox-in-exchange-admin-center.md
+cmProducts:
+- https://microsoft-devrel.poolparty.biz/DevRelOfferingOntology/68e4b2d8-b70c-4019-b49a-d1f8881e2aea
+- https://authoring-docs-microsoft.poolparty.biz/devrel/cf9b82c5-b6dc-45f3-b005-b1bc5fc03bea
+- https://authoring-docs-microsoft.poolparty.biz/devrel/1dd701e0-441f-4b0a-9806-aa47decc4e35
+spProducts:
+- https://microsoft-devrel.poolparty.biz/DevRelOfferingOntology/67b2ba1a-6f74-4044-a48a-f0f8ad076b8f
+- https://authoring-docs-microsoft.poolparty.biz/devrel/0c85d34e-bfd2-4466-957c-f0b61e9692df
+- https://authoring-docs-microsoft.poolparty.biz/devrel/0a2fc935-5977-4aa6-9f55-0be03bd2acb8
+platformId: cf5cbc00-ba46-0a22-e2bf-5e8f197895da
+---
+
+# Use a screen reader to add a new equipment mailbox in the Classic Exchange admin center in Exchange Online | Microsoft Learn
+
+Create mailboxes in the Classic Exchange admin center (Classic EAC) for any printer, projector, or other device that's attached to your corporate network by using your keyboard and any screen reader.
+
+## Get started
+
+Navigate with Internet Explorer and keyboard shortcuts, and make sure that you have the appropriate Office 365 or Microsoft 365 subscription plan and admin role to work in the EAC. Then, open the EAC and get started.
+
+### Use your browser and keyboard to navigate in the EAC
+
+Exchange Online, which includes the EAC, is a web-based application, so the keyboard shortcuts and navigation may be different from those in Exchange 2016. [Accessibility in the Exchange admin center](accessibility-in-exchange-admin-center).
+
+For best results when working in the EAC in Exchange Online, use Internet Explorer as your browser. [Learn more about Internet Explorer keyboard shortcuts](https://support.microsoft.com/help/17456/).
+
+Many tasks in the EAC require the use of pop-up windows. In your browser, be sure to [enable pop-up windows](https://support.microsoft.com/help/17479) for Microsoft 365 or Office 365.
+
+### Confirm your Office 365 or Microsoft 365 subscription plan
+
+Exchange Online is included in Microsoft 365 and Office 365 business and enterprise subscription plans; however, capabilities may differ by plan. If your EAC doesn't include a function described in this article, your plan might not include it.
+
+For more information about the Exchange Online capabilities in your subscription plan, go to [What Office 365 business product or license do I have?](https://support.microsoft.com/office/f8ab5e25-bf3f-4a47-b264-174b1ee925fd) and [Exchange Online Service Description.](/en-us/office365/servicedescriptions/exchange-online-service-description/exchange-online-service-description).
+
+### Open the EAC, and confirm your admin role
+
+To add a new equipment mailbox, [Use a screen reader to open the Exchange admin center](use-screen-reader-to-open-exchange-admin-center) and check that you've been assigned to the Organization Management admin role group. Learn how to [Use a screen reader to identify your admin role in the Exchange admin center](use-screen-reader-to-identify-admin-role-in-exchange-admin-center)
+
+## Add a new equipment mailbox
+
+1. After you are on the EAC Dashboard (home) page, to navigate to the page body, press Ctrl+F6. You hear "Welcome."
+2. Press the Tab key until you hear "Resources," which is the second link after "Recipients."
+3. To go to the **Resources** tab on the **Mailboxes** page, press Enter. The focus is on the **Resources** tab.
+4. To get to the **New** button in the **Resources** pane, press Ctrl+F6. You hear "New button..
+5. To open the **New Item** submenu, press Spacebar.
+6. To go to the **Equipment Mailbox** option, press the Down Arrow key. You hear "Equipment mailbox." (Narrator says, "Blank line.".
+7. To open a **New Equipment Mailbox** form in a pop-up window, press Enter. You hear the URL of the pop-up window and, eventually, "Equipment name." The focus is in the **Equipment Name** box.
+
+    Tip
+
+    There are only three boxes on this form: **Equipment Name**, **Email Address**, and **Domain**. All three are required.
+8. Type in the name of the device and, to move to the **Email Address** box, press the Tab key. You hear "Email address..
+
+    Tip
+
+    This name appears in users' Outlook Address Book. To make rooms easier for users to find, use a consistent naming convention within your organization.
+9. The email address is also required. Type in the first portion of the email address (before the at sign) and, to get to the domain drop-down list, press the Tab key. You hear the selected domain option.
+10. If the default selection in the domain drop-down menu is not the domain you want to choose, to access other available domains, press the Down Arrow key. As you move through the available options, you hear the domain name and suffix. When you find the domain you want to use, to select it, press Enter.
+
+    Tip
+
+    You can't type any values into the domain box. It's a prepopulated drop-down list. To add domains to that drop-down list, contact your Office admin.
+11. To go to the **Save** button, press the Tab key. You hear "Save..
+12. Press Enter. This saves the mailbox you created with the values you assigned, and the pop-up window closes, returning you to the **Resources** list on the **Resources** tab. The focus is on the **New Mailbox** button. You hear "New mailbox..
+
+Tip
+
+It may take a few minutes to save the new mailbox and close the pop-up window. You don't hear any additional feedback during this wait time.
+
+If you want to add other information to your new room mailbox, learn about all the options available in Use a screen reader to use mailbox properties and options in EAC on Exchange Online.
+
+## Technical support for customers with disabilities
+
+Microsoft wants to provide the best possible experience for all our customers. If you have a disability or have questions related to accessibility, contact the [Microsoft Disability Answer Desk](https://www.microsoft.com/Accessibility/disability-answer-desk) for technical assistance.
+
+The Disability Answer Desk support team is trained in using many popular assistive technologies and can offer assistance in English, Spanish, French, and American Sign Language. Visit the [Microsoft Disability Answer Desk](https://www.microsoft.com/Accessibility/disability-answer-desk) site to find the contact details for your region.

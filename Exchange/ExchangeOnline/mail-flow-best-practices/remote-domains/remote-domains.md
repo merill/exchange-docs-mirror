@@ -1,0 +1,107 @@
+---
+layout: Conceptual
+title: Remote domains in Exchange Online | Microsoft Learn
+canonicalUrl: https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/remote-domains/remote-domains
+Manager: serdars
+ms.subservice: exo-mail-flow
+ms.devlang: powershell
+ROBOTS: INDEX,FOLLOW
+breadcrumb_path: /exchange/breadcrumb/toc.json
+recommendations: true
+uhfHeaderId: MSDocsHeader-Exchange
+feedback_system: None
+feedback_product_url: ''
+ms.localizationpriority: medium
+description: Admins can learn about remote domains (message formatting settings for external domains) in Exchange Online.
+ms.topic: article
+author: AshaIyengar21
+ms.author: serdars
+ms.assetid: f191e052-658d-4c74-bfe7-bcb1d525e4e3
+ms.reviewer: 
+ms.collection:
+- exchange-online
+- M365-email-calendar
+f1.keywords:
+- NOCSH
+audience: ITPro
+ms.service: exchange-online
+ms.date: 2018-06-25T00:00:00.0000000Z
+locale: en-us
+document_id: 3f41f96e-25f1-b5b2-0183-973d1f8e511e
+document_version_independent_id: 22a4972e-4bab-c38f-0a96-5c9d97728f38
+original_content_git_url: https://github.com/MicrosoftDocs/OfficeDocs-Exchange-pr/blob/live/Exchange/ExchangeOnline/mail-flow-best-practices/remote-domains/remote-domains.md
+site_name: Docs
+depot_name: office.OfficeDocs-Exchange
+page_type: conceptual
+toc_rel: ../../onlinetoc/toc.json
+pdf_url_template: https://learn.microsoft.com/pdfstore/en-us/office.OfficeDocs-Exchange/{branchName}{pdfName}
+feedback_help_link_type: ''
+feedback_help_link_url: ''
+asset_id: mail-flow-best-practices/remote-domains/remote-domains
+moniker_range_name: 
+monikers: []
+item_type: Content
+source_path: Exchange/ExchangeOnline/mail-flow-best-practices/remote-domains/remote-domains.md
+cmProducts:
+- https://authoring-docs-microsoft.poolparty.biz/devrel/3e34b70d-bca0-4369-a01b-71d1edfd427b
+- https://authoring-docs-microsoft.poolparty.biz/devrel/cf9b82c5-b6dc-45f3-b005-b1bc5fc03bea
+- https://authoring-docs-microsoft.poolparty.biz/devrel/1ae5c491-970a-4062-8301-6336e69f9026
+spProducts:
+- https://authoring-docs-microsoft.poolparty.biz/devrel/8ca32b3f-fa14-46df-b09a-9c4a591d6396
+- https://authoring-docs-microsoft.poolparty.biz/devrel/0c85d34e-bfd2-4466-957c-f0b61e9692df
+- https://authoring-docs-microsoft.poolparty.biz/devrel/f2c3e52e-3667-4e8a-bf11-20b9eaccdc8c
+platformId: 8d7749b7-17ed-12ee-7d11-ae0620767e71
+---
+
+# Remote domains in Exchange Online | Microsoft Learn
+
+There are many reasons why you might want to control the types and the format of messages that your users send from Exchange Online to recipients in external domains. For example:
+
+- You don't want to let your users forward messages to recipients in other domains.
+- You work with an organization that you don't want to receive automatic messages from (for example, non-delivery reports and out-of-office replies).
+- You have a business partner that's outside your organization, and you'd like that partner to receive the same out-of-office replies as those received by people inside your organization.
+- Your users frequently send email to a company that supports limited email formats, and you'd like to make sure all emails sent to that organization are sent in a format that they can read.
+
+To accomplish this, you use what's called a *remote domain*. The remote domain settings override settings that your users might configure in Outlook or Outlook on the web (formerly known as Outlook Web App), or that you configure in the Exchange admin center (EAC) or Exchange Online PowerShell. For example, users might have an out-of-office reply set up for people outside the organization, but if a sender from a remote domain sends mail to them, and the remote domain isn't set to receive out-of-office replies, no out-of-office reply is sent. To change the settings, you can:
+
+- Create a remote domain for a specific domain, and set unique properties for emails sent to that domain.
+- Modify the settings for the default remote domain. If you have no other remote domains set up, changes to the default remote domain apply to all external domains. If you have other remote domains set up, changes to the default remote domain apply to all other external domains.
+
+For instructions on how to create and configure remote domains, see [Manage remote domains in Exchange Online](manage-remote-domains).
+
+## Reducing or increasing information flow to another company
+
+When a message comes from outside your organization, there are several types of replies that are automatically generated. Some types of replies are set up by users in Outlook or Outlook on the web, and others are set up by admins. Because the remote domain settings override settings configured by users, as well as mail user and mail contact settings configured by admins, you can choose which types of automatic replies are sent to everyone on a remote domain.
+
+If a remote domain configuration blocks a specific type of reply, like a non-delivery report, from being sent to recipients in that domain, the reply is generated, but then it's deleted before it's sent. No error message is sent. For example, if you turn off automatic forwarding on the default remote domain, when users try to automatically forward email to another domain, they can change their settings or create the Inbox rule, but their messages won't be forwarded.
+
+The following table shows the types of replies you can control in a remote domain and the settings that each remote domain setting overrides.
+
+| Type of reply | Description | Per-user settings that this remote domain setting overrides |
+| --- | --- | --- |
+| Out-of-office messages | Specify whether an out-of-office message should be sent to people on the remote domain, and if so, which message to use. You can select either the reply that the user on your domain set up for people outside your organization, or the one for people inside your organization. The default is to send the out-of-office reply for people outside your organization. | This setting overrides out-of-office reply settings specified by individual users in [Outlook](https://support.microsoft.com/office/9742f476-5348-4f9f-997f-5e208513bd67) or [Outlook on the web](https://support.microsoft.com/office/0c193ab0-b9e1-4058-84be-a5b014242290). |
+| Automatic replies | Allow or prevent automatic replies to senders on the remote domain. The default is to allow automatic replies. | This setting overrides automatic replies set up by admins using the [Set-MailboxAutoReplyConfiguration](/en-us/powershell/module/exchangepowershell/set-mailboxautoreplyconfiguration) cmdlet. |
+| Automatic forwards | Allow or prevent automatically forwarded messages to be sent to people on the remote domain. The default is to allow automatic forwarding. | When users configure automatic forwarding to recipients on a remote domain, the remote domain settings override users' automatic forwarding settings (messages are blocked if automatic forwards are disabled for the remote domain). Users can configure automatic forwarding by using these methods: <br>- Inbox rules in Outlook or Outlook on the web to forward messages. Learn more about Inbox rules in [Outlook](https://support.microsoft.com/office/c24f5dea-9465-4df4-ad17-a50704d66c59) and [Outlook on the web](https://support.microsoft.com/office/8400435c-f14e-4272-9004-1548bb1848f2).<br>- Forwarding options in Outlook on the web. For more information, see [Forward email from Office 365 to another email account](https://support.microsoft.com/office/ecafbc06-e812-4b9e-a7af-5074a9c7abd0).<br><br><br>**Note**: When admins use other methods to configure automatic forwarding for users, the forwarded messages aren't affected by the remote domain settings (messages are forwarded to recipients on the remote domain even if automatic forwards are disabled for the remote domain). For example: <br><br>- Mail forwarding for a user. For more information, see [Configure email forwarding for a mailbox](../../recipients-in-exchange-online/manage-user-mailboxes/configure-email-forwarding).<br>- Mail flow rules (also known as transport rules) to forward messages. For more information, see [Mail flow rules (transport rules) in Exchange Online](../../security-and-compliance/mail-flow-rules/mail-flow-rules)<br><br>. |
+| Delivery reports | Allow or prevent a delivery receipt to be sent to people on the remote domain. The default is to allow sending delivery reports. | An email sender on the remote domain can request a delivery receipt on a message. This remote domain setting can override the sender's request for a delivery receipt and prevent the delivery receipt from being sent. For more information about requesting a delivery receipt, see [Add delivery receipt to track an e-mail message](https://support.microsoft.com/office/69cd1b39-2300-482d-96c6-22e2f4a96848). |
+| Non-delivery report | Allow or prevent non-delivery reports (also known a NDRs or bounce messages) to be sent to people on the remote domain. The default is to allow sending non-delivery reports. | This remote domain setting is the only way to prevent non-delivery reports from being sent when a message can't be delivered. |
+| Meeting forward notifications | Prevent or allow meeting forward notifications to be sent to people on the remote domain. The default is to prevent sending meeting forward notifications. | Meeting forward notifications are automatically created and sent to the meeting organizer when a meeting participant forwards a meeting. Typically, they're sent to meeting organizers only on domains that are part of your Exchange Online organization. Admins can enable them to be sent to meeting organizers on the remote domain. |
+
+## Specifying message format
+
+To make sure that email sent from your Exchange Online organization is compatible with the receiving messaging system in the remote domain, you can specify the message format and character set to use for all email messages sent to that remote domain. For example, if you know that the remote domain isn't using Exchange, you can specify to never use Rich Text Format (RTF). The following table describes the message format settings.
+
+| Setting | Description | Settings that this overrides |
+| --- | --- | --- |
+| Rich Text Format (RTF) | Choose how to format messages: <br>- **Always**: Use this value if the remote domain uses Exchange.<br>- **Never**: If the remote domain doesn't use Exchange, use this value.<br>- **Follow user settings**: Use message format settings defined by the user. Use this value if you don't know what email system the remote domain uses.<br><br><br> The default is to follow the user's settings. | Message format can be defined in several places: Outlook or Outlook on the web, and the admin can also use the [Set-MailContact](/en-us/powershell/module/exchangepowershell/set-mailcontact) or [Set-MailUser](/en-us/powershell/module/exchangepowershell/set-mailuser) cmdlets to modify settings per recipient.  Remote domain settings override settings specified by a user or by the admin. For more information about the message formats and the order of precedence of message format settings, see [Message format and transmission in Exchange Online](../message-format-and-transmission). |
+| MIME character set and Non-MIME character set | - **None**: Use the character set specified in the message.<br>- **Select a character set from the list**: If the message doesn't have a character set, the selected character set is used.<br><br><br> By default, no character sets are specified. | These settings are used only if the message doesn't include a character set. For a complete list of supported character sets, see [Supported character sets for remote domains](supported-character-sets). |
+
+If you specify a particular message format for the remote domain, the format of the headers and message content sent to the domain are modified.
+
+## Other settings
+
+You can configure other message settings for remote domains by using Exchange Online PowerShell. For a complete list of settings, see [Set-RemoteDomain](/en-us/powershell/module/exchangepowershell/set-remotedomain).
+
+## More information
+
+- You can't remove the default remote domain.
+- You can specify all subdomains when you create a remote domain.
