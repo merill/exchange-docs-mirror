@@ -1,0 +1,30 @@
+name: Mirror Microsoft Learn
+
+on:
+  schedule:
+    # Four times a day, between the runs of the Defender, Intune and Entra mirrors.
+    - cron: '50 4,10,16,22 * * *'
+  workflow_dispatch:
+    inputs:
+      full:
+        description: Refetch every page, ignoring saved ETags
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: learn-mirror
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: merill/learn-mirror@v1
+        with:
+          full: ${{ inputs.full || false }}

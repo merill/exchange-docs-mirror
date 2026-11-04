@@ -1,0 +1,18 @@
+{
+  "sitemapIndex": "https://learn.microsoft.com/_sitemaps/sitemapindex.xml",
+  "sitemaps": "/_sitemaps/exchange_en-us_\\d+\\.xml$",
+  "tocs": [
+    "https://learn.microsoft.com/en-us/exchange/toc.json"
+  ],
+  "extraUrls": [],
+  "include": "^https://learn\\.microsoft\\.com/en-us/exchange/",
+  "exclude": [
+    "^https://learn\\.microsoft\\.com/en-us/exchange/client-developer/"
+  ],
+  "trackedPaths": "^Exchange/(ExchangeOnline|ExchangeHybrid)/",
+  "sourceRepos": [
+    "MicrosoftDocs/OfficeDocs-Exchange-pr"
+  ],
+  "concurrency": 4,
+  "priority": "(whats-new|release-notes|what-s-new|new-features|deprecat|retire)"
+}
