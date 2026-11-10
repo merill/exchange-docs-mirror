@@ -3,7 +3,7 @@ layout: Conceptual
 title: Create a mailbox policy in Exchange Online for Outlook on the web and the new Outlook for Windows | Microsoft Learn
 canonicalUrl: https://learn.microsoft.com/en-us/exchange/clients-and-mobile-in-exchange-online/outlook-on-the-web/create-outlook-web-app-mailbox-policy
 Manager: serdars
-ms.subservice: exo-manageability
+ms.subservice: outlook-services
 ms.devlang: powershell
 ROBOTS: INDEX,FOLLOW
 breadcrumb_path: /exchange/breadcrumb/toc.json
@@ -14,10 +14,9 @@ feedback_product_url: ''
 ms.localizationpriority: medium
 description: You can create an Outlook on the web mailbox policy to apply a common set of policy settings. Outlook on the web mailbox policies is useful for applying and standardizing settings, for example, attachment settings, for specific groups of users.
 ms.topic: how-to
-author: Swatyario
-ms.author: adbhale
+author: officedocspr
+ms.author: odocspr
 ms.assetid: 347207fa-cfb7-40a6-b19a-831dcdb54ad5
-ms.reviewer: chrisda
 ms.collection:
 - exchange-online
 - M365-email-calendar

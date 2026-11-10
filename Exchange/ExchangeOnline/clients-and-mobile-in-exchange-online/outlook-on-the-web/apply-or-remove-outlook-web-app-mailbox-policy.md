@@ -3,7 +3,7 @@ layout: Conceptual
 title: Apply or remove mailbox policy on a mailbox in Exchange Online | Microsoft Learn
 canonicalUrl: https://learn.microsoft.com/en-us/exchange/clients-and-mobile-in-exchange-online/outlook-on-the-web/apply-or-remove-outlook-web-app-mailbox-policy
 Manager: serdars
-ms.subservice: exo-manageability
+ms.subservice: outlook-services
 ms.devlang: powershell
 ROBOTS: INDEX,FOLLOW
 breadcrumb_path: /exchange/breadcrumb/toc.json
@@ -16,10 +16,9 @@ ms.custom:
 - has-azure-ad-ps-ref
 description: You can apply an Outlook on the web mailbox policy to one or more mailboxes or remove one using either the EAC or Exchange Online PowerShell.
 ms.topic: how-to
-author: Swatyario
-ms.author: adbhale
+author: officedocspr
+ms.author: odocspr
 ms.assetid: 51d8e269-b0d5-4bc7-9b3d-0460871e54fa
-ms.reviewer: chrisda
 ms.collection:
 - exchange-online
 - M365-email-calendar

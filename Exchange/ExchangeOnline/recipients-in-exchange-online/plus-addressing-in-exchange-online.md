@@ -2,8 +2,8 @@
 layout: Conceptual
 title: Plus Addressing in Exchange Online | Microsoft Learn
 canonicalUrl: https://learn.microsoft.com/en-us/exchange/recipients-in-exchange-online/plus-addressing-in-exchange-online
-Manager: Serdars
-ms.subservice: exo-manageability
+Manager: serdars
+ms.subservice: ''
 ms.devlang: powershell
 ROBOTS: INDEX,FOLLOW
 breadcrumb_path: /exchange/breadcrumb/toc.json
@@ -11,8 +11,8 @@ recommendations: true
 uhfHeaderId: MSDocsHeader-Exchange
 feedback_system: None
 feedback_product_url: ''
-ms.author: adbhale
-author: Swatyario
+author: officedocspr
+ms.author: odocspr
 audience: ITPro
 f1.keywords: 
 ms.topic: article

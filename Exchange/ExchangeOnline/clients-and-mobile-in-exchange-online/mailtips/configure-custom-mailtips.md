@@ -3,7 +3,7 @@ layout: Conceptual
 title: Configure custom MailTips for recipients in Exchange Online | Microsoft Learn
 canonicalUrl: https://learn.microsoft.com/en-us/exchange/clients-and-mobile-in-exchange-online/mailtips/configure-custom-mailtips
 Manager: serdars
-ms.subservice: exo-manageability
+ms.subservice: ''
 ms.devlang: powershell
 ROBOTS: INDEX,FOLLOW
 breadcrumb_path: /exchange/breadcrumb/toc.json
@@ -16,8 +16,8 @@ ms.custom:
 - has-azure-ad-ps-ref
 description: 'MailTips are informative messages displayed to users in the InfoBar in Outlook on the web and Microsoft Outlook 2010 or later when a user does any of the following while composing an e-mail message:'
 ms.topic: how-to
-author: Swatyario
-ms.author: adbhale
+author: officedocspr
+ms.author: odocspr
 ms.assetid: df8ee7ae-2486-4890-b057-cda87b4cb1ec
 ms.reviewer: 
 ms.collection:

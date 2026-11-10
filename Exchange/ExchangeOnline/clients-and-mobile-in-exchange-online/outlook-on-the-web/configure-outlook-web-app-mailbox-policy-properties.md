@@ -3,7 +3,7 @@ layout: Conceptual
 title: View or configure Outlook on the web mailbox policy properties in Exchange Online | Microsoft Learn
 canonicalUrl: https://learn.microsoft.com/en-us/exchange/clients-and-mobile-in-exchange-online/outlook-on-the-web/configure-outlook-web-app-mailbox-policy-properties
 Manager: serdars
-ms.subservice: exo-manageability
+ms.subservice: outlook-services
 ms.devlang: powershell
 ROBOTS: INDEX,FOLLOW
 breadcrumb_path: /exchange/breadcrumb/toc.json
@@ -16,10 +16,9 @@ ms.custom:
 - has-azure-ad-ps-ref
 description: Admins can learn how to view and modify Outlook on the web mailbox policies (formerly known as Outlook Web App mailbox policies) in Exchange Online.
 ms.topic: how-to
-author: Swatyario
-ms.author: adbhale
+author: officedocspr
+ms.author: odocspr
 ms.assetid: be012ffe-8fdb-4fb7-aebd-78b3a55593fa
-ms.reviewer: chrisda
 ms.collection:
 - exchange-online
 - M365-email-calendar

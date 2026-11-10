@@ -3,7 +3,7 @@ layout: Conceptual
 title: Remove an Outlook on the web mailbox policy from Exchange Online | Microsoft Learn
 canonicalUrl: https://learn.microsoft.com/en-us/exchange/clients-and-mobile-in-exchange-online/outlook-on-the-web/remove-outlook-web-app-mailbox-policy
 Manager: serdars
-ms.subservice: exo-manageability
+ms.subservice: outlook-services
 ms.devlang: powershell
 ROBOTS: INDEX,FOLLOW
 breadcrumb_path: /exchange/breadcrumb/toc.json
@@ -14,10 +14,9 @@ feedback_product_url: ''
 ms.localizationpriority: medium
 description: Admins can learn how to remove an Outlook on the web mailbox policy from an Exchange Online organization by using either the EAC or Exchange Online PowerShell.
 ms.topic: how-to
-author: Swatyario
-ms.author: adbhale
+author: officedocspr
+ms.author: odocspr
 ms.assetid: edab7bac-b62c-4b82-8f21-dcac77cf0e8f
-ms.reviewer: chrisda
 ms.collection:
 - exchange-online
 - M365-email-calendar

@@ -3,7 +3,7 @@ layout: Conceptual
 title: Voice mail in Exchange Online Unified Messaging | Microsoft Learn
 canonicalUrl: https://learn.microsoft.com/en-us/exchange/voice-mail-unified-messaging/voice-mail-unified-messaging
 Manager: Serdars
-ms.subservice: exo-manageability
+ms.subservice: ''
 ms.devlang: powershell
 ROBOTS: INDEX,FOLLOW
 breadcrumb_path: /exchange/breadcrumb/toc.json
@@ -11,8 +11,8 @@ recommendations: true
 uhfHeaderId: MSDocsHeader-Exchange
 feedback_system: None
 feedback_product_url: ''
-ms.author: adbhale
-author: Swatyario
+author: officedocspr
+ms.author: odocspr
 audience: ITPro
 f1.keywords: 
 ms.topic: article
