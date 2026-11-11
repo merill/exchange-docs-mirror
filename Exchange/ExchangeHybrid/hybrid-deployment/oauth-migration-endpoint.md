@@ -12,7 +12,7 @@ uhfHeaderId: MSDocsHeader-Exchange
 feedback_system: None
 feedback_product_url: ''
 description: The OAuth token exchange described here will allow the Microsoft 365 Mailbox Replication Service to authenticate with the organization’s on-premises Exchange environment using Oauth. This is a secure replacement for the use of basic auth (username and password) credentials of a user who is a member of privileged role groups in the on-premises Active Directory.
-ms.date: 2026-11-04T00:00:00.0000000Z
+ms.date: 2026-11-10T00:00:00.0000000Z
 ms.service: exchange-server-it-pro
 ms.topic: how-to
 author: soropeza1
@@ -60,8 +60,8 @@ Important
 
 The new OAuth method is available to:
 
-- On-premises organizations running the latest Exchange Server Subscription Edition (SE) or Exchange 2019 CU 15 with the latest ESU.
-- O365 commercial cloud organizations.
+- Microsoft 365 multi-tenant (WW) environments only.
+- On-premises organizations running the October 2026 or newer version of Exchange Server Subscription Edition (SE) or Exchange Server 2019 CU15 with the latest Exchange Security Update (October 2026).
 
 ## Prerequisites
 
@@ -80,7 +80,7 @@ The new OAuth method is available to:
 
     Note
 
-    Using the **Application (client) ID** in the domain name portion of the URI is **optional but recommended**. The URI must be specific to the MRS proxy endpoint on-premises and using the ID ensures this. However, you can use any fully qualified name that's specific to the MRS proxy endpoint and part of a domain name that you registered for use in your Microsoft Entra ID tenant.
+    Using the **Application (client) ID** in the domain name portion of the URI is **optional but recommended**. The URI must be specific to the MRS proxy endpoint on-premises and using the ID ensures this. However, you can use any fully qualified name that's specific to the MRS proxy endpoint and part of a domain name that you registered for use in your Microsoft Entra ID tenant. When using the **Application (client) ID** you will need to create the corresponding DNS record for it and add it to the publicly trusted certificate as needed.
 3. Add an app role to your application. Select **API permissions** on the left-hand column. Select the three dots to the right of Microsoft Graph and choose **Remove all permissions** to leave direct permissions empty.
 
     [![Screenshot that shows Registered App, remove default API permissions.](../exchangehybrid/hybrid-deployment/media/oauth-migration-endpoint/pasted-image-8f8c7cc9.png)](../exchangehybrid/hybrid-deployment/media/oauth-migration-endpoint/pasted-image-8f8c7cc9.png#lightbox)
@@ -118,7 +118,7 @@ The new OAuth method is available to:
 }
 ```
 
-Add the `xml_aud_guid` property to `optionalClaims` shown below and then select **Save**.
+Add the `xms_aud_guid` property to `optionalClaims` shown below and then select **Save**.
 
 ```json
 {
@@ -205,7 +205,7 @@ You need to register the service principal for the Mailbox Replication Service (
     $appId = "Application (client) ID"
     $role = "App role Value"
     
-    # on premise API Appplication
+    # on premise API Application
     $app = Get-MgApplication –Filter "AppId eq '$appId'"
     $appRole = $app.AppRoles | ?{$_.Value -eq $role}
     
@@ -363,41 +363,59 @@ This is only required if you are using Exchange Server Subscription Edition (SE)
 
 Now that the configuration is completed, you can create an Oauth endpoint that can be used in migration batches or in remote moves.
 
-### Create the migration endpoint
+1. Connect to Exchange Online PowerShell. Start PowerShell as administrator and [Connect to Exchange Online PowerShell](/en-us/powershell/exchange/connect-to-exchange-online-powershell).
 
-Specify the `-UseOauth` parameter when you create the migration endpoint. The `-RemoteServer` parameter must match the host part of the **Application ID URI** in the on-premises API.
+    ```powershell
+    Connect-ExchangeOnline
+    ```
+2. Create the migration endpoint. Specify the `-UseOauth` parameter when you create the migration endpoint. The `-RemoteServer` parameter must match the host part of the **Application ID URI** in the on-premises API. For more optional configuration parameters, see [New-MigrationEndpoint](/en-us/powershell/module/exchangepowershell/new-migrationendpoint).
 
-If you used `https://[Application (client) ID].contoso.com/ews/mrsproxy.svc` in the **Application ID URI** then `RemoteServer` value is `[Application (client) ID].contoso.com`. If you used a different URI, for example `https://mail.contoso.com/ews/mrsproxy.svc` then the value to use is `mail.contoso.com`
+    Note
 
-1. Connect to Exchange Online PowerShell: Start PowerShell as administrator and [Connect to Exchange Online PowerShell](/en-us/powershell/exchange/connect-to-exchange-online-powershell) by running the following command.
+    If you used `https://[Application (client) ID].contoso.com/ews/mrsproxy.svc` in the **Application ID URI** configuration then `RemoteServer` value is `[Application (client) ID].contoso.com`.
 
-```powershell
-Connect-ExchangeOnline
-```
+    If you used a different URI, for example `https://mail.contoso.com/ews/mrsproxy.svc` then the value to use is `mail.contoso.com`.
 
-1. Create the migration endpoint. For more optional configuration parameters, see [New-MigrationEndpoint](/en-us/powershell/module/exchangepowershell/new-migrationendpoint).
+    ```powershell
+    $remoteServer = "Application ID URI host value"
+    New-MigrationEndpoint -UseOAuth -Name "OAuthEndpoint" -RemoteServer $remoteServer -ExchangeRemoteMove
+    ```
+3. After you create the migration endpoint, run `Test-MigrationServerAvailability`, which gets an OAuth token.
 
-```powershell
-$remoteServer = "mail.contoso.com"
-New-MigrationEndpoint -UseOAuth -Name "OAuthEndpoint" -RemoteServer $remoteServer -ExchangeRemoteMove
-```
-
-1. After you create the migration endpoint, run `Test-MigrationServerAvailability`, which gets an OAuth token.
-
-```powershell
-Test-MigrationServerAvailability -Endpoint "OAuthEndpoint"
-```
+    ```powershell
+    Test-MigrationServerAvailability -Endpoint "OAuthEndpoint"
+    
+    Result           : Success
+    Message          : This test only validates retrieving the OAuth token based on the endpoint configuration. It does not attempt to connect to the remote host.
+    SupportsCutover  : False
+    ErrorDetail      :
+    StructuredResult :
+    TestedEndpoint   : OAuthEndpoint
+    IsValid          : True
+    Identity         :
+    ObjectState      : New
+    
+    ```
 
 ### Create move requests or migration batches
 
-Use the new migration endpoint to configure remote moves by using the `New-MoveRequest` cmdlet. The `-RemoteHostName` value must match the host path of the on-premises application URI as explained in the previous section. Also, specify `-ArchiveDomain` to ensure the cmdlet resolves the correct parameter set. For more parameters, see [New-MoveRequest](/en-us/powershell/module/exchangepowershell/new-moverequest).
+Use the newly created migration endpoint to configure remote moves by using the `New-MoveRequest` cmdlet. The `-RemoteHostName` value must match the host path of the on-premises application URI as explained in the previous section. Also, specify `-ArchiveDomain` to ensure the cmdlet resolves the correct parameter set:
 
 ```powershell
-$remoteServer = "mail.contoso.com"
-New-MoveRequest -Identity "user@contoso.com" -TargetDeliveryDomain [contoso.com] -SourceEndpoint "OAuthEndpoint" -RemoteHostName $remoteServer -Remote -ArchiveDomain [contoso.com]
+$remoteServer = "Application ID URI host value"
+New-MoveRequest -Identity "user@contoso.com" -SourceEndpoint "OAuthEndpoint" -RemoteHostName $remoteServer -Remote -TargetDeliveryDomain "contoso.com" -ArchiveDomain "contoso.com"
 ```
 
-For migration batch creation, treat the OAuth endpoint the same as any other endpoint type. For more parameters for offboarding, see [New-MigrationBatch (ExchangePowerShell) | Microsoft Learn.](/en-us/powershell/module/exchangepowershell/new-migrationbatch). For more parameters for onboarding, see [New-MigrationBatch (ExchangePowerShell) | Microsoft Learn](/en-us/powershell/module/exchangepowershell/new-migrationbatch).
+Here is an example for an offboarding move:
+
+```powershell
+$remoteServer = "Application ID URI host value"
+New-MoveRequest -Identity "user@contoso.com" -SourceEndpoint "OAuthEndpoint" -Outbound -RemoteHostName $remoteServer -TargetDeliveryDomain "contoso.com" -RemoteTargetDatabase "your target database"
+```
+
+For more parameters, see [New-MoveRequest](/en-us/powershell/module/exchangepowershell/new-moverequest).
+
+For migration batch creation, treat the OAuth endpoint the same as any other endpoint type. For more parameters for onboarding, see [New-MigrationBatch](/en-us/powershell/module/exchangepowershell/new-migrationbatch).
 
 ```powershell
 New-Migrationbatch -Name MyBatch -SourceEndpoint "OAuthEndpoint" 
